@@ -1,0 +1,10 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+[contenteditable=true]:empty:focus:before{
+  content: attr(placeholder);
+  pointer-events: none;
+  color: rgba(0,0,0,0.2);
+  display: block;
+}
