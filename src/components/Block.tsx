@@ -1,29 +1,18 @@
 import Input from "./Input";
 import ContextMenu from "../components/ContextMenu";
 import { useState } from "react";
-
-export type BlockType = 'Text' | 'H1'; 
+import { IBlock } from "../pages/Home";
 
 interface Props {
-  type: BlockType;
+  block: IBlock
+  index: number;
 }
 
-const Block: React.FC<Props> = ({ type }) => {
+const Block: React.FC<Props> = ({ block, index }) => {
   const [isMenuVisible, showIsMenuVisible] = useState<boolean>(false);
 
-  function renderBlock(blockType: BlockType) {
-    switch(blockType) {
-      case 'H1':
-        return <Input type={blockType} showIsMenuVisible={showIsMenuVisible}/>
-      case 'Text':
-        return <Input type={blockType} showIsMenuVisible={showIsMenuVisible}/>
-      default:
-        return null;
-    }
-  }
-
   return <div>
-    {renderBlock(type)}
+    <Input block={block} index={index} showIsMenuVisible={showIsMenuVisible}/>
     {isMenuVisible && <ContextMenu />}
   </div>
 }

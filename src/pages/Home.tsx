@@ -1,22 +1,27 @@
 import type { NextPage } from "next";
-import Block, { BlockType } from "../components/Block";
+import Block from "../components/Block";
 import { nanoid } from 'nanoid'
 import { proxy, useSnapshot } from "valtio";
 import { useEffect, useRef } from "react";
+import { IBlockTypes } from "../fixtures/Blocks";
 
-interface IBlock {
+export interface IBlock {
   id: string;
-  type: BlockType;
+  type: IBlockTypes;
 }
 
 const blocks: IBlock[] = [
   {
     id: "1",
-    type: "H1",
+    type: "heading-1",
   },
   {
     id: "2",
-    type: "Text",
+    type: "text",
+  },
+  {
+    id: "3",
+    type: "heading-3",
   },
 ]
 
@@ -25,16 +30,16 @@ const state = proxy({
   blocks
 });
 
-export function addBlock() {
-  state.blocks.push({
+export function addBlock(index: number) {
+  state.blocks.splice(index, 0, {
     id: nanoid(),
-    type: "Text"
-  })
+    type: "text",
+  });
 }
 
-export function removeBlock() {
+export function removeBlock(id: string) {
   if (state.blocks.length > 1) {
-    state.blocks.pop();
+    state.blocks = state.blocks.filter(currentBlock => currentBlock.id !== id);
   }
 }
 
@@ -53,8 +58,8 @@ const Home: NextPage = () => {
     <div>
       <h1 className="text-4xl font-bold">Home</h1>
       <div ref={containerRef} className="mt-4 flex flex-col gap-2">
-        {blocks.map(block => (
-          <Block key={block.id} type={block.type}/>
+        {blocks.map((block, index) => (
+          <Block key={block.id} block={block} index={index}/>
         ))}
       </div>
     </div>

@@ -32,6 +32,18 @@
     minimatch "^3.1.2"
     strip-json-comments "^3.1.1"
 
+"@floating-ui/core@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@floating-ui/core/-/core-1.0.1.tgz#00e64d74e911602c8533957af0cce5af6b2e93c8"
+  integrity sha512-bO37brCPfteXQfFY0DyNDGB3+IMe4j150KFQcgJ5aBP295p9nBGeHEs/p0czrRbtlHq4Px/yoPXO/+dOCcF4uA==
+
+"@floating-ui/dom@^1.0.0":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@floating-ui/dom/-/dom-1.0.1.tgz#3321d4e799d6ac2503e729131d07ad0e714aabeb"
+  integrity sha512-wBDiLUKWU8QNPNOTAFHiIAkBv1KlHauG2AhqjSeh2H+wR8PX+AArXfz8NkRexH5PgMJMmSOS70YS89AbWYh5dA==
+  dependencies:
+    "@floating-ui/core" "^1.0.1"
+
 "@headlessui/react@^1.6.6":
   version "1.6.6"
   resolved "https://registry.yarnpkg.com/@headlessui/react/-/react-1.6.6.tgz#3073c066b85535c9d28783da0a4d9288b5354d0c"
@@ -421,6 +433,19 @@ aria-query@^4.2.2:
   dependencies:
     "@babel/runtime" "^7.10.2"
     "@babel/runtime-corejs3" "^7.10.2"
+
+ariakit-utils@0.17.0-next.26:
+  version "0.17.0-next.26"
+  resolved "https://registry.yarnpkg.com/ariakit-utils/-/ariakit-utils-0.17.0-next.26.tgz#585ccf021f9271c4ac0be2753ccf49bbd88bfaae"
+  integrity sha512-Su1MA0nWcMKI/lPS++jgkXek6Z+Az4SGOTIjGz2mn7kN6pSRO3Xm4gW/6gLpbu0kmVd+MYNSpmEvFnJUf/udhA==
+
+ariakit@^2.0.0-next.40:
+  version "2.0.0-next.40"
+  resolved "https://registry.yarnpkg.com/ariakit/-/ariakit-2.0.0-next.40.tgz#f5966f20dc6a79c2852ca4fba2bc049475b041c4"
+  integrity sha512-MGZkWrkyb1rmRJRwxhqh1eOSkJE9KFmyaszoYgGLVCxsJQ+WkJpjodB4Wt5t5A9hQlj3vnRzfW0q+reS4yWXdg==
+  dependencies:
+    "@floating-ui/dom" "^1.0.0"
+    ariakit-utils "0.17.0-next.26"
 
 array-includes@^3.1.4, array-includes@^3.1.5:
   version "3.1.5"
@@ -1814,7 +1839,7 @@ prisma@^4.2.1:
   dependencies:
     "@prisma/engines" "4.2.1"
 
-prop-types@^15.8.1:
+prop-types@^15.7.1, prop-types@^15.8.1:
   version "15.8.1"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.8.1.tgz#67d87bf1a694f48435cf332c24af10214a3140b5"
   integrity sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==
@@ -1842,6 +1867,14 @@ quick-lru@^5.1.1:
   version "5.1.1"
   resolved "https://registry.yarnpkg.com/quick-lru/-/quick-lru-5.1.1.tgz#366493e6b3e42a3a6885e2e99d18f80fb7a8c932"
   integrity sha512-WuyALRjWPDGtt/wzJiadO5AXY+8hZ80hVpe6MyivgraREW751X3SbhRvG3eLKOYN+8VEvqLcf3wdnt44Z4S4SA==
+
+react-contenteditable@^3.3.6:
+  version "3.3.6"
+  resolved "https://registry.yarnpkg.com/react-contenteditable/-/react-contenteditable-3.3.6.tgz#4dac0eeaff268ca1614b52d4290d7b21f3bfb997"
+  integrity sha512-61+Anbmzggel1sP7nwvxq3d2woD3duR5R89RoLGqKan1A+nruFIcmLjw2F+qqk70AyABls0BDKzE1vqS1UIF1g==
+  dependencies:
+    fast-deep-equal "^3.1.3"
+    prop-types "^15.7.1"
 
 react-dom@18.2.0:
   version "18.2.0"
