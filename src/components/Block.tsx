@@ -1,7 +1,8 @@
 import Input from "./Input";
-import { useState, memo } from "react";
-import { IBlock } from "../pages/Home";
+import { memo } from "react";
+import { IBlock, state } from "../pages/Home";
 import BlockMenu from "./BlockMenu";
+import { useSnapshot } from "valtio";
 
 interface Props {
   block: IBlock
@@ -9,11 +10,10 @@ interface Props {
 }
 
 const Block: React.FC<Props> = ({ block, index }) => {
-  const [isMenuVisible, showIsMenuVisible] = useState<boolean>(false);
+  const { isBlockMenuVisible } = useSnapshot(state);
 
   return <div>
-    <Input block={block} index={index} isMenuVisible={isMenuVisible} showIsMenuVisible={showIsMenuVisible}/>
-    {isMenuVisible && <BlockMenu showIsMenuVisible={showIsMenuVisible}/>}
+    <Input block={block} index={index} />
   </div>
 }
 

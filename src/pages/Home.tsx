@@ -4,6 +4,8 @@ import { nanoid } from "nanoid";
 import { proxy, useSnapshot } from "valtio";
 import { useEffect, useRef } from "react";
 import { IBlockTypes } from "../fixtures/Blocks";
+import BlockMenu from "../components/BlockMenu";
+import Input from "../components/Input";
 
 export interface IBlock {
   id: string;
@@ -26,9 +28,19 @@ const blocks: IBlock[] = [
 ];
 
 // State
-const state = proxy({
+export const state = proxy({
   blocks,
+  currentBlockIdx: 0,
+  isBlockMenuVisible: false
 });
+
+export function hideBlockMenu() {
+  state.isBlockMenuVisible = false;
+}
+
+export function showBlockMenu() {
+  state.isBlockMenuVisible = true;
+}
 
 export function addBlock(index: number) {
   state.blocks.splice(index, 0, {
@@ -45,9 +57,20 @@ export function removeBlock(id: string) {
   }
 }
 
+export function changeBlock(id: IBlockTypes) {
+  const currentBlockIdx = state.currentBlockIdx;
+  const currentBlock =  state.blocks[currentBlockIdx];
+  const currentBlockId = currentBlock!.id;
+  const newBlock = {
+    id: currentBlockId,
+    type: id
+  }
+  state.blocks.splice(currentBlockIdx, 1, newBlock);
+}
+
 const Home: NextPage = () => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const { blocks } = useSnapshot(state);
+  const { blocks, isBlockMenuVisible } = useSnapshot(state);
 
   useEffect(() => {
     const allBlocks = containerRef.current?.querySelectorAll(".block");
@@ -61,9 +84,10 @@ const Home: NextPage = () => {
       <h1 className="text-4xl font-bold">Home</h1>
       <div ref={containerRef} className="mt-4 flex flex-col gap-2">
         {blocks.map((block, index) => (
-          <Block key={block.id} block={block} index={index} />
+          <Input key={`${block.id}-${index}`} block={block} index={index} />
         ))}
       </div>
+      {isBlockMenuVisible && <BlockMenu />}
     </div>
   );
 };
