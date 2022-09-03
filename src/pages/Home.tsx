@@ -1,5 +1,4 @@
 import type { NextPage } from "next";
-import Block from "../components/Block";
 import { nanoid } from "nanoid";
 import { proxy, useSnapshot } from "valtio";
 import { useEffect, useRef } from "react";
@@ -43,6 +42,7 @@ export function showBlockMenu() {
 }
 
 export function addBlock(index: number) {
+  if(state.isBlockMenuVisible) return;
   state.blocks.splice(index, 0, {
     id: nanoid(),
     type: "text",
@@ -58,6 +58,7 @@ export function removeBlock(id: string) {
 }
 
 export function changeBlock(id: IBlockTypes) {
+  console.log(id);
   const currentBlockIdx = state.currentBlockIdx;
   const currentBlock =  state.blocks[currentBlockIdx];
   const currentBlockId = currentBlock!.id;
@@ -66,6 +67,7 @@ export function changeBlock(id: IBlockTypes) {
     type: id
   }
   state.blocks.splice(currentBlockIdx, 1, newBlock);
+  state.isBlockMenuVisible = false;
 }
 
 const Home: NextPage = () => {
