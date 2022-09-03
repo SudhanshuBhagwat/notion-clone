@@ -1,17 +1,19 @@
-import { Fragment, KeyboardEvent, memo, useEffect, useRef, useState } from "react";
+import { Fragment, KeyboardEvent, memo, useCallback, useEffect, useRef, useState } from "react";
 import ContentEditable, { ContentEditableEvent } from "react-contenteditable";
-import { AllowedBlocks, getBlockTagById, IBlockTypes } from "../fixtures/Blocks";
+import { getBlockTagById, IBlockTypes } from "../fixtures/Blocks";
 import { addBlock, IBlock, removeBlock } from "../pages/Home";
 import { EllipsisVerticalIcon } from "@heroicons/react/24/outline";
 import { Menu, Transition } from "@headlessui/react";
+import { ContextMenuOptions } from "../fixtures/ContextMenu";
 
 interface Props {
   block: IBlock;
   index: number;
+  isMenuVisible: boolean;
   showIsMenuVisible: (value: boolean) => void;
 }
 
-const Input: React.FC<Props> = ({ block, index, showIsMenuVisible }) => {
+const Input: React.FC<Props> = ({ block, index, isMenuVisible, showIsMenuVisible }) => {
   const inputRef = useRef<any>(null);
   const [value, setValue] = useState<string>("");
   const [isHovererd, setIsHovered] = useState<boolean>(false);
@@ -20,11 +22,14 @@ const Input: React.FC<Props> = ({ block, index, showIsMenuVisible }) => {
     document.getElementById(block.id)?.focus();
   }, []);
 
-  function handleKeyDown(event: KeyboardEvent<HTMLElement>) {
+  const handleKeyDown = useCallback((event: KeyboardEvent<HTMLElement>) => {
     if (event.key === "Enter") {
       event.preventDefault();
-      showIsMenuVisible(false);
-      addBlock(index + 1);
+      if (!isMenuVisible) {
+        addBlock(index + 1);
+      } else {
+        showIsMenuVisible(false);
+      }
     } else if (event.key === "Backspace" && inputRef.current?.lastHtml === "") {
       event.preventDefault();
       showIsMenuVisible(false);
@@ -33,16 +38,16 @@ const Input: React.FC<Props> = ({ block, index, showIsMenuVisible }) => {
       showIsMenuVisible(true);
     } else {
       if (event.key === "Backspace") {
-        if (value.charAt(value.length - 1) === "/") {
+        if (value.charAt(value.length - 1) !== "/") {
           showIsMenuVisible(false);
         }
       }  
     }
-  }
+  }, []);
 
-  function handleInput(event: ContentEditableEvent) {
+  const handleInput = useCallback((event: ContentEditableEvent) => {
     setValue(event.target.value);
-  }
+  }, []);
 
   function getClasses(blockType: IBlockTypes): string {
     switch(blockType) {
@@ -84,11 +89,11 @@ const Input: React.FC<Props> = ({ block, index, showIsMenuVisible }) => {
         >
           <Menu.Items className={"absolute top-8 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"}>
             <div className="p-1">
-              {AllowedBlocks.map((block, idx) => {
-                return <Menu.Item key={`${block.id}-${idx}`}>
+              {ContextMenuOptions.map((option, idx) => {
+                return <Menu.Item key={`${option.id}-${idx}`}>
                   {({ active }) => (
-                    <button className={`${active ? 'bg-violet-500 text-white' : 'text-gray-900'} group flex w-full items-center rounded-md px-2 py-2 text-sm`}>
-                      {block.placeholder}
+                    <button onClick={() => option.onClick(block.id)} className={`${active ? 'bg-violet-500 text-white' : 'text-gray-900'} group flex w-full items-center rounded-md px-2 py-2 text-sm`}>
+                      {option.name}
                     </button>
                   )}
                 </Menu.Item>
@@ -98,7 +103,7 @@ const Input: React.FC<Props> = ({ block, index, showIsMenuVisible }) => {
         </Transition>
       </Menu>
     }
-    <ContentEditable id={block.id} ref={inputRef} tagName={getBlockTagById(block.type)} html={value} onChange={handleInput} onKeyDown={handleKeyDown} className={`w-full ml-7 focus:outline-none ${getClasses(block.type)}`} placeholder="Type '/' for commands"/>
+    <ContentEditable id={block.id} ref={inputRef} tagName={getBlockTagById(block.type)} html={value} onChange={handleInput} onKeyDown={handleKeyDown} className={`block w-full ml-7 focus:outline-none ${getClasses(block.type)}`} placeholder="Type '/' for commands"/>
   </div>
 }
 

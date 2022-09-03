@@ -1,7 +1,7 @@
 import Input from "./Input";
-import ContextMenu from "../components/ContextMenu";
-import { useState } from "react";
+import { useState, memo } from "react";
 import { IBlock } from "../pages/Home";
+import BlockMenu from "./BlockMenu";
 
 interface Props {
   block: IBlock
@@ -12,9 +12,9 @@ const Block: React.FC<Props> = ({ block, index }) => {
   const [isMenuVisible, showIsMenuVisible] = useState<boolean>(false);
 
   return <div>
-    <Input block={block} index={index} showIsMenuVisible={showIsMenuVisible}/>
-    {isMenuVisible && <ContextMenu />}
+    <Input block={block} index={index} isMenuVisible={isMenuVisible} showIsMenuVisible={showIsMenuVisible}/>
+    {isMenuVisible && <BlockMenu showIsMenuVisible={showIsMenuVisible}/>}
   </div>
 }
 
-export default Block;
+export default memo(Block);
