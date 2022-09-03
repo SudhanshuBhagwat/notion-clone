@@ -58,7 +58,6 @@ export function removeBlock(id: string) {
 }
 
 export function changeBlock(id: IBlockTypes) {
-  console.log(id);
   const currentBlockIdx = state.currentBlockIdx;
   const currentBlock =  state.blocks[currentBlockIdx];
   const currentBlockId = currentBlock!.id;
