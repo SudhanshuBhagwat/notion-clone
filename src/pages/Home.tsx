@@ -77,7 +77,8 @@ const Home: NextPage = () => {
   useEffect(() => {
     const allBlocks = containerRef.current?.querySelectorAll(".block");
     if (allBlocks) {
-      (allBlocks[allBlocks?.length - 1] as HTMLElement)?.focus();
+      const node = allBlocks[allBlocks?.length - 1] as HTMLElement;
+      node.focus();
     }
   }, [blocks]);
 
