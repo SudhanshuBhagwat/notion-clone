@@ -1,25 +1,28 @@
 import React, { memo, useCallback, useEffect, useMemo, useState } from "react";
 import { AllowedBlocks, IBlockTypes } from "../fixtures/Blocks";
-import { changeBlock, hideBlockMenu } from "../pages/Home";
+import { changeBlock, hideBlockMenu, state } from "../pages/Home";
 
 const BlockMenu = () => {
   const [currentBlockIdx, setCurrentBlockIdx] = useState<number>(-1);
 
-  const handleKeyDown = useCallback((event: any) => {
-    if (event.key === "ArrowDown") {
-      setCurrentBlockIdx((currentIdx) =>
-        Math.min(AllowedBlocks.length - 1, currentIdx + 1)
-      );
-    } else if (event.key === "ArrowUp") {
-      setCurrentBlockIdx((currentIdx) => Math.max(0, currentIdx - 1));
-    } else if (event.key === "Enter") {
-      event.preventDefault();
-      handleChange();
-    } else if (event.key === "Escape") {
-      event.preventDefault();
-      hideBlockMenu();
-    }
-  }, [currentBlockIdx]);
+  const handleKeyDown = useCallback(
+    (event: any) => {
+      if (event.key === "ArrowDown") {
+        setCurrentBlockIdx((currentIdx) =>
+          Math.min(AllowedBlocks.length - 1, currentIdx + 1)
+        );
+      } else if (event.key === "ArrowUp") {
+        setCurrentBlockIdx((currentIdx) => Math.max(0, currentIdx - 1));
+      } else if (event.key === "Enter") {
+        event.preventDefault();
+        handleChange();
+      } else if (event.key === "Escape") {
+        event.preventDefault();
+        hideBlockMenu();
+      }
+    },
+    [currentBlockIdx]
+  );
 
   function handleClick(id: IBlockTypes) {
     hideBlockMenu();
@@ -56,10 +59,15 @@ const BlockMenu = () => {
   }, [currentBlockIdx]);
 
   return (
-    <div className="bg-white w-60 px-1 rounded-md shadow-md">
-      <ul id="blockMenu" className="flex flex-col gap-1 py-1">
-        {renderBlocks}
-      </ul>
+    <div className="absolute" style={{
+      top: state.menuPosition + 10,
+      left: 50
+    }}>
+      <div className="bg-white w-60 px-1 rounded-md shadow-md">
+        <ul id="blockMenu" className="flex flex-col gap-1 py-1">
+          {renderBlocks}
+        </ul>
+      </div>
     </div>
   );
 };

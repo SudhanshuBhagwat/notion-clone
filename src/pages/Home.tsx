@@ -30,7 +30,8 @@ const blocks: IBlock[] = [
 export const state = proxy({
   blocks,
   currentBlockIdx: 0,
-  isBlockMenuVisible: false
+  isBlockMenuVisible: false,
+  menuPosition: -1,
 });
 
 export function hideBlockMenu() {
@@ -42,7 +43,7 @@ export function showBlockMenu() {
 }
 
 export function addBlock(index: number) {
-  if(state.isBlockMenuVisible) return;
+  if (state.isBlockMenuVisible) return;
   state.blocks.splice(index, 0, {
     id: nanoid(),
     type: "text",
@@ -59,12 +60,12 @@ export function removeBlock(id: string) {
 
 export function changeBlock(id: IBlockTypes) {
   const currentBlockIdx = state.currentBlockIdx;
-  const currentBlock =  state.blocks[currentBlockIdx];
+  const currentBlock = state.blocks[currentBlockIdx];
   const currentBlockId = currentBlock!.id;
   const newBlock = {
     id: currentBlockId,
-    type: id
-  }
+    type: id,
+  };
   state.blocks.splice(currentBlockIdx, 1, newBlock);
   state.isBlockMenuVisible = false;
 }

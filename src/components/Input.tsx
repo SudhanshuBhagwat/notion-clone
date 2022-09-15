@@ -20,7 +20,7 @@ import {
 import { EllipsisVerticalIcon } from "@heroicons/react/24/outline";
 import { Menu, Transition } from "@headlessui/react";
 import { ContextMenuOptions } from "../fixtures/ContextMenu";
-import { useSnapshot } from "valtio";
+import useMesaure from "react-use-measure";
 
 interface Props {
   block: IBlock;
@@ -31,6 +31,8 @@ const Input: React.FC<Props> = ({ block, index }) => {
   const inputRef = useRef<any>(null);
   const [value, setValue] = useState<string>("");
   const [isHovererd, setIsHovered] = useState<boolean>(false);
+  const [ref, bounds] = useMesaure();
+  state.menuPosition = bounds.bottom;
 
   useEffect(() => {
     document.getElementById(block.id)?.focus();
@@ -43,6 +45,8 @@ const Input: React.FC<Props> = ({ block, index }) => {
     } else if (event.key === "Backspace" && inputRef.current?.lastHtml === "") {
       event.preventDefault();
       removeBlock(block.id);
+    } else if (event.key === "ArrowDown") {
+      console.log("Down");
     } else if (event.key === "/") {
       showBlockMenu();
     } else {
@@ -87,6 +91,7 @@ const Input: React.FC<Props> = ({ block, index }) => {
 
   return (
     <div
+      ref={ref}
       className="flex"
       onMouseOver={handleMouseOver}
       onMouseLeave={handleMouseLeave}
