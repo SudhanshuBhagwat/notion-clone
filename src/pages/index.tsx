@@ -11,7 +11,7 @@ const Main: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="px-8 py-6">
+      <main className="bg-slate-50 h-full px-8 py-6">
         <Home />
       </main>
     </>

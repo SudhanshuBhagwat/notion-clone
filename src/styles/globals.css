@@ -2,6 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+html,
+body {
+  height: 100vh;
+}
+
+#__next {
+  height: 100%;
+}
+
 [contenteditable=true]:empty:focus:before{
   content: attr(placeholder);
   pointer-events: none;

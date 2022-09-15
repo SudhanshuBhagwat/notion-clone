@@ -46,7 +46,7 @@ const Input: React.FC<Props> = ({ block, index }) => {
       event.preventDefault();
       removeBlock(block.id);
     } else if (event.key === "ArrowDown") {
-      console.log("Down");
+      //TODO implement ArrowDown
     } else if (event.key === "/") {
       showBlockMenu();
     } else {

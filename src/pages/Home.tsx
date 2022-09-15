@@ -83,7 +83,7 @@ const Home: NextPage = () => {
   }, [blocks]);
 
   return (
-    <div>
+    <div> 
       <h1 className="text-4xl font-bold">Home</h1>
       <div ref={containerRef} className="mt-4 flex flex-col gap-2">
         {blocks.map((block, index) => (

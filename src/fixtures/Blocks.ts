@@ -19,21 +19,25 @@ export const AllowedBlocks = [
   {
     id: 'heading-1',
     tag: 'h1',
-    placeholder: 'Heading 1'
+    description: 'Big section heading.',
+    title: 'Heading 1'
   },
   {
     id: 'heading-2',
     tag: 'h2',
-    placeholder: 'Heading 2'
+    description: 'Medium section heading.',
+    title: 'Heading 2'
   },
   {
     id: 'heading-3',
     tag: 'h3',
-    placeholder: 'Heading 3'
+    description: 'Small section heading.',
+    title: 'Heading 3'
   },
   {
     id: 'text',
     tag: 'p',
-    placeholder: 'Text'
+    description: 'Just start writing with plain text',
+    title: 'Text'
   },
 ] as const;
